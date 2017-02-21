@@ -1,5 +1,5 @@
-#include <R.h>
-#include <Rinternals.h>
+#include "linvgamma.h"
+
 
 // C interfaceable function
 // Relies on all arguments being valid
