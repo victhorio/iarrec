@@ -1,3 +1,8 @@
 .Rproj.user
 identifiability.Rproj
 .Rbuildignore
+..Rcheck
+.Rhistory
+.RData
+*.o
+*.so
