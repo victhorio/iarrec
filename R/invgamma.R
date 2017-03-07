@@ -21,7 +21,7 @@
 #' @useDynLib identifiability
 #' @export
 linvgamma <- function(x, alpha, beta)
-  .Call('linvgamma', x, alpha, beta)
+	.Call('linvgamma', x, alpha, beta)
 
 
 #' Density of the Inverse Gamma Distribution
@@ -39,4 +39,4 @@ linvgamma <- function(x, alpha, beta)
 #' @useDynLib identifiability
 #' @export
 dinvgamma <- function(x, alpha, beta)
-  .Call('dinvgamma', x, alpha, beta)
+	.Call('dinvgamma', x, alpha, beta)
