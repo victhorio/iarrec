@@ -1,8 +1,13 @@
-#ifndef R_IDENTIFIABILITY_INVGAMMA_HEADER
-#define R_IDENTIFIABILITY_INVGAMMA_HEADER
+/**
+ * linvgamma.h
+ * Copyright (c) 2017 Victhor S. Sartório
+ * This file and its contents are licensed under the terms of the MIT License
+ */
 
-#include <R.h>
-#include <Rinternals.h>
+#ifndef R_IDENTIFIABILITY_LINVGAMMA_HEADER
+#define R_IDENTIFIABILITY_LINVGAMMA_HEADER
+
+#include "common.h"
 
 void
 c_linvgamma(double const *restrict x, R_xlen_t n, double a, double b, double *restrict r);

@@ -1,3 +1,11 @@
+### invgamma.R
+### Copyright (c) 2017 Victhor S. Sartório
+### This file and its contents are licensed under the terms of the MIT License
+###
+### This file implements R wrappers for the C functions relating with the inverse gamma
+### distribution.
+
+
 #' Log-Density of the Inverse Gamma Distribution
 #'
 #' Vectorized log-density function for the inverse gamma distribution
@@ -14,6 +22,7 @@
 #' @export
 linvgamma <- function(x, alpha, beta)
   .Call('linvgamma', x, alpha, beta)
+
 
 #' Density of the Inverse Gamma Distribution
 #'

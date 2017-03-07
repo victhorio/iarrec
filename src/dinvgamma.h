@@ -1,8 +1,13 @@
+/**
+ * dinvgamma.h
+ * Copyright (c) 2017 Victhor S. Sartório
+ * This file and its contents are licensed under the terms of the MIT License
+ */
+
 #ifndef R_IDENTIFIABILITY_INVGAMMA_HEADER
 #define R_IDENTIFIABILITY_INVGAMMA_HEADER
 
-#include <R.h>
-#include <Rinternals.h>
+#include "common.h"
 
 void
 c_dinvgamma(double const *restrict x, R_xlen_t n, double a, double b, double *restrict r);
