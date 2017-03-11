@@ -4,8 +4,8 @@
  * This file and its contents are licensed under the terms of the MIT License
  */
 
-#ifndef R_IDENTIFIABILITY_INVGAMMA_HEADER
-#define R_IDENTIFIABILITY_INVGAMMA_HEADER
+#ifndef R_IDENTIFIABILITY_DINVGAMMA_HEADER
+#define R_IDENTIFIABILITY_DINVGAMMA_HEADER
 
 #include "common.h"
 
