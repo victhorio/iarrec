@@ -9,6 +9,9 @@
 
 #include "common.h"
 
+double
+c_linvgamma_s(double x, R_xlen_t n, double a, double b);
+
 void
 c_linvgamma(double const *restrict x, R_xlen_t n, double a, double b, double *restrict r);
 

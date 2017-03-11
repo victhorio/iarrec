@@ -13,6 +13,23 @@
 
 
 /**
+ * c_dinvgamma_s
+ *
+ * @param x The point at which the density will be evaluated
+ * @param n The number of elements of the vector x
+ * @param a The scale parameter
+ * @param b The shape parameter
+ *
+ * Note that the function relies that all arguments are valid.
+ */
+HOTFUNC double
+c_dinvgamma_s(double x, R_xlen_t n, double a, double b)
+{
+	return exp(a * log(b) - lgamma(a) - (a+1) * log(x) - b/x);
+}
+
+
+/**
  * c_dinvgamma
  *
  * @param x The vector containing the points at which the density will be evaluated
@@ -43,10 +60,6 @@ dinvgamma(SEXP rx, SEXP ra, SEXP rb)
 {
 	int cond_protect = 0; // Number of conditional PROTECT calls
 
-	// ---------------------------------------------
-	// Argument validation
-	// ---------------------------------------------
-
 	R_xlen_t n = Rf_xlength(rx);
 	if (n <= 0) {
 		Rf_error("First argument is empty.");
@@ -70,10 +83,6 @@ dinvgamma(SEXP rx, SEXP ra, SEXP rb)
 		Rf_error("Expected second argument to be real valued, atomic and positive.");
 	if (Rf_xlength(rb) != 1 || TYPEOF(rb) != REALSXP || REAL(rb)[0] <= 0)
 		Rf_error("Expected third argument to be real valued, atomic and positive.");
-
-	// ------------------------------------------
-	// Function logic
-	// ------------------------------------------
 
 	SEXP ret = PROTECT(Rf_allocVector(REALSXP, n));
 
