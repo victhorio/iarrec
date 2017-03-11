@@ -16,14 +16,13 @@
  * c_dinvgamma_s
  *
  * @param x The point at which the density will be evaluated
- * @param n The number of elements of the vector x
  * @param a The scale parameter
  * @param b The shape parameter
  *
  * Note that the function relies that all arguments are valid.
  */
 HOTFUNC double
-c_dinvgamma_s(double x, R_xlen_t n, double a, double b)
+c_dinvgamma_s(double x, double a, double b)
 {
 	return exp(a * log(b) - lgamma(a) - (a+1) * log(x) - b/x);
 }

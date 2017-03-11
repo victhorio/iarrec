@@ -16,14 +16,13 @@
  * c_linvgamma_s
  *
  * @param x The point at which the log-density will be evaluated
- * @param n The number of elements of the vector x
  * @param a The scale parameter
  * @param b The shape parameter
  *
  * Note that the function relies that all arguments are valid.
  */
 HOTFUNC double
-c_linvgamma_s(double x, R_xlen_t n, double a, double b)
+c_linvgamma_s(double x, double a, double b)
 {
 	return a * log(b) - lgamma(a) - (a+1) * log(x) - b/x;
 }
