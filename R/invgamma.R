@@ -18,7 +18,7 @@
 #' @examples
 #' linvgamma(seq(0.1, 100, 0.2), 3, 5)
 #'
-#' @useDynLib identifiability
+#' @useDynLib iarrec
 #' @export
 linvgamma <- function(x, alpha, beta)
 	.Call('linvgamma', x, alpha, beta)
@@ -36,7 +36,7 @@ linvgamma <- function(x, alpha, beta)
 #' @examples
 #' dinvgamma(seq(0.1, 100, 0.2), 3, 5)
 #'
-#' @useDynLib identifiability
+#' @useDynLib iarrec
 #' @export
 dinvgamma <- function(x, alpha, beta)
 	.Call('dinvgamma', x, alpha, beta)

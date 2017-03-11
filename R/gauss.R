@@ -18,7 +18,7 @@
 #' @examples
 #' lgauss(seq(0.1, 100, 0.2), 3, 5)
 #'
-#' @useDynLib identifiability
+#' @useDynLib iarrec
 #' @export
 lgauss <- function(x, mu, sigma2)
 	.Call('lgauss', x, mu, sigma2)
