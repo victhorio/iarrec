@@ -1,4 +1,4 @@
-library(identifiability)
+library(iarrec)
 context("Inverse gamma related functions")
 
 

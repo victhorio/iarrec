@@ -1,4 +1,4 @@
 library(testthat)
-library(identifiability)
+library(iarrec)
 
-test_check("identifiability")
+test_check("iarrec")
