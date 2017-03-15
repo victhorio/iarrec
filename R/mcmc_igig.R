@@ -13,12 +13,3 @@
 mcmc_igig <- function(numit, t1_start, t2_start, sigma1, sigma2, Y, a1, b1, a2, b2)
 	.Call('mcmc_igig',
 		  as.integer(numit), t1_start, t2_start, sigma1, sigma2, Y, a1, b1, a2, b2)
-
-
-# @TODO: Move this to a more general file and add documentation
-#' print.MCMCresult
-#'
-#' @export
-print.MCMCresult <- function(x)
-	cat(sprintf('MCMC Result containing %d data points and acceptance ratio %f\n',
-				length(x[[1]]), x[[3]]))
