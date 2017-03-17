@@ -197,6 +197,11 @@ slr_igig(SEXP r_numit,     // Number of iterations
 	// Variable to count number of accepted steps
 	R_xlen_t accepted = 0;
 
+	double old_logpost = logposterior(b0[0], b1[0], mx[0], sx[0], sr[0], sm[0],
+	                                  mu0, s0, mu1, s1, mumu, smu, ax, bx, ar, br, am, bm,
+	                                  Y, X, n);
+	double prp_logpost;
+
 	// Iterative process
 	for (R_xlen_t i = 1; i < numit; i++) {
 		// Get proposal values
@@ -219,17 +224,11 @@ slr_igig(SEXP r_numit,     // Number of iterations
 		}
 
 		// Calculate the `alpha` of acceptance
-		// We calculate it twice for each set of points. @FIXME @TODO
-		const double logpost_prp = logposterior(p_b0, p_b1, p_mx, p_sx, p_sr, p_sm,
+		prp_logpost = logposterior(p_b0, p_b1, p_mx, p_sx, p_sr, p_sm,
 		                                        mu0, s0, mu1, s1, mumu, smu,
 		                                        ax, bx, ar, br, am, bm,
 		                                        Y, X, n);
-		const double logpost_old = logposterior(b0[i-1], b1[i-1], mx[i-1],
-		                                        sx[i-1], sr[i-1], sm[i-1],
-		                                        mu0, s0, mu1, s1, mumu, smu,
-		                                        ax, bx, ar, br, am, bm,
-		                                        Y, X, n);
-		const double alpha = exp(logpost_prp - logpost_old);
+		const double alpha = exp(prp_logpost - old_logpost);
 
 		// If `alpha` > 1 accept. If `alpha` in [0,1] accept with probability `alpha`
 		if (Rf_runif(0, 1) < alpha) {
@@ -239,6 +238,7 @@ slr_igig(SEXP r_numit,     // Number of iterations
 			sx[i] = p_sx;
 			sr[i] = p_sr;
 			sm[i] = p_sm;
+			old_logpost = prp_logpost;
 			accepted++;
 		} else {
 			b0[i] = b0[i-1];
