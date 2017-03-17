@@ -4,19 +4,19 @@
 \alias{plot.MCMCresultSLR}
 \title{Plots a MCMC Result from the IARREC package}
 \usage{
-\method{plot}{MCMCresultSLR}(x, drop = 0, pause = TRUE, ...)
+\method{plot}{MCMCresultSLR}(x, pause = TRUE, ...)
 }
 \arguments{
 \item{x}{An MCMCresult S3 object}
+
+\item{pause}{Indicates if should pause in between plots. Defaults to TRUE.}
+
+\item{...}{Optional base R graphical parameters}
 
 \item{drop}{Indicates how much of the samples to ignore.
 If it's a value between [0,1) then it ignores the first \eqn{drop * n} samples from
 the result. If it's a value within [1, +Inf) then the first \eqn{drop} values are
 ignored. Ignores nothing by default.}
-
-\item{pause}{Indicates if should pause in between plots. Defaults to TRUE.}
-
-\item{...}{Optional base R graphical parameters}
 }
 \description{
 Plots a MCMC Result from the IARREC package

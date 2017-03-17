@@ -1,3 +1,8 @@
+### MCMCresult.R
+### Copyright (c) 2017 Victhor S. Sartório
+### This file and its contents are licensed under the terms of the MIT License
+
+
 # @TODO: Add documentation
 #' print.MCMCresultSLR
 #'
@@ -23,44 +28,6 @@ mean.MCMCresultSLR <- function(x)
 }
 
 
-#' dropBurnin
-#'
-#' @export
-dropBurnin <- function(x, ...) UseMethod("dropBurnin")
-
-
-# @TODO: Add documentation
-#' dropBurnin.MCMCresultSLR
-#'
-#' @export
-dropBurnin.MCMCresultSLR <- function(x, drop = 0.5)
-{
-	if (!is.numeric(drop) || drop < 0)
-		stop("Expected drop argument to be within [0,1] or [1, +Inf]")
-
-	if (drop < 1) {
-		n <- length(x$beta_0)
-		cutoff <- floor(n * drop) + 1
-		x$beta_0   <- x$beta_0[cutoff:n]
-		x$beta_1   <- x$beta_1[cutoff:n]
-		x$mu_x     <- x$mu_x[cutoff:n]
-		x$sigma2_x <- x$sigma2_x[cutoff:n]
-		x$sigma2_r <- x$sigma2_r[cutoff:n]
-		x$sigma2_m <- x$sigma2_m[cutoff:n]
-	} else {
-		n <- length(x$beta_1)
-		x$beta_0   <- x$beta_0[drop:n]
-		x$beta_1   <- x$beta_1[drop:n]
-		x$mu_x     <- x$mu_x[drop:n]
-		x$sigma2_x <- x$sigma2_x[drop:n]
-		x$sigma2_r <- x$sigma2_r[drop:n]
-		x$sigma2_m <- x$sigma2_m[drop:n]
-	}
-
-	x
-}
-
-
 #' Plots a MCMC Result from the IARREC package
 #'
 #' @param x An MCMCresult S3 object
@@ -72,16 +39,8 @@ dropBurnin.MCMCresultSLR <- function(x, drop = 0.5)
 #' @param ... Optional base R graphical parameters
 #'
 #' @export
-plot.MCMCresultSLR <- function(x, drop = 0, pause = TRUE, ...)
+plot.MCMCresultSLR <- function(x, pause = TRUE, ...)
 {
-	if (!is.numeric(drop) || drop < 0)
-		stop("Expected drop argument to be within [0,1] or [1, +Inf]")
-
-	if (drop != 0) {
-		x <- dropBurnin.MCMCresultSLR(x, drop)
-	}
-	n <- length(x$beta_0)
-
 	q_beta0 <- quantile(x$beta_0, c(0.25, 0.5, 0.75))
 	q_beta1 <- quantile(x$beta_1, c(0.25, 0.5, 0.75))
 	q_mux   <- quantile(x$mu_x, c(0.25, 0.5, 0.75))
@@ -142,29 +101,11 @@ print.MCMCresult2 <- function(x)
 #' Plots a MCMC Result from the IARREC package
 #'
 #' @param x An MCMCresult S3 object
-#' @param drop Indicates how much of the samples to ignore.
-#'     If it's a value between [0,1) then it ignores the first \eqn{drop * n} samples from
-#'     the result. If it's a value within [1, +Inf) then the first \eqn{drop} values are
-#'     ignored. Ignores nothing by default.
 #' @param ... Optional base R graphical parameters
 #'
 #' @export
-plot.MCMCresult2 <- function(x, drop = 0, ...)
+plot.MCMCresult2 <- function(x, ...)
 {
-	if (!is.numeric(drop) || drop < 0)
-		stop("Expected drop argument to be within [0,1] or [1, +Inf]")
-
-	if (drop < 1) {
-		n <- length(x$theta_1)
-		cutoff <- floor(n * drop) + 1
-		x$theta_1 <- x$theta_1[cutoff:n]
-		x$theta_2 <- x$theta_2[cutoff:n]
-	} else {
-		n <- length(x$theta_1)
-		x$theta_1 <- x$theta_1[drop:n]
-		x$theta_2 <- x$theta_2[drop:n]
-	}
-
 	qt1 <- quantile(x$theta_1, c(0.25, 0.5, 0.75))
 	qt2 <- quantile(x$theta_2, c(0.25, 0.5, 0.75))
 
