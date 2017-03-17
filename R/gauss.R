@@ -22,3 +22,25 @@
 #' @export
 lgauss <- function(x, mu, sigma2)
 	.Call('lgauss', x, mu, sigma2)
+
+
+#' Log-Density of the Bivariate Gaussian Distribution
+#'
+#' Atomic log-density function for the Gaussian distribution
+#'
+#' @param x The point x of the function
+#' @param y The point y of the function
+#' @param mx The mean of the X distribution
+#' @param my The mean of the Y distribution
+#' @param sxx The variance of the X distribution
+#' @param syy The variance of the Y distribution
+#' @param sxy The covariance between X and Y
+#' @return The log-density of a bivariate Gaussian variable (X,Y) at the point (x,y)
+#'
+#' @examples
+#' lbigauss(0.3, 0.8, 6, 3, 8, 12, 4)
+#'
+#' @useDynLib iarrec
+#' @export
+lbigauss <- function(x, y, mx, my, sxx, syy, sxy)
+	.Call('lbigauss', x, y, mx, my, sxx, syy, sxy)

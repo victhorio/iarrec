@@ -3,6 +3,7 @@
 S3method(plot,MCMCresult)
 S3method(print,MCMCresult)
 export(dinvgamma)
+export(lbigauss)
 export(lgauss)
 export(linvgamma)
 export(mcmc_igig)
