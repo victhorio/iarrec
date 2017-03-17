@@ -33,7 +33,7 @@ double logposterior(double t1, double t2,       // Points to be evaluated
 	long double loglikelihood = 0.0;
 	const double s2 = t1+t2;
 	for (R_xlen_t i = 0; i < n; i++)
-		loglikelihood += -0.5 * (log(2*PI*(s2)) + (Y[i])*(Y[i])/s2);
+		loglikelihood += c_lgauss_s(Y[i], 0, s2);
 
 	// Return the log-posterior \prorp P(Y|t1,t2) * P(t1) * P(t2)
 	return prior_t1 + prior_t2 + loglikelihood;

@@ -7,6 +7,7 @@
 
 
 # @TODO: Add documentation
+# @TODO: Make integer coercion inside the C code
 #' MCMC_IGIG
 #'
 #' @export
