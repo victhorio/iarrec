@@ -35,3 +35,19 @@ mean.MCMCresultSLR <- function(x)
 print.MCMCresult2 <- function(x)
 	cat(sprintf('MCMC Result containing %d data points and acceptance ratio %f\n',
 				length(x[[1]]), x[[3]]))
+
+
+# @TODO: Add documentation
+#' mean.MCMCresultSLR
+#'
+#' @export
+mean.MCMCresult2 <- function(x)
+{
+	nms <- names(x)[1:2]
+	r <- rep(0, 2)
+	for (i in 1:2) {
+		r[i] <- mean(x[[i]])
+	}
+	names(r) <- nms
+	r
+}
