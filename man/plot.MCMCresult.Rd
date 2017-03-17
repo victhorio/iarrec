@@ -4,7 +4,7 @@
 \alias{plot.MCMCresult}
 \title{plot.MCMCresult}
 \usage{
-\method{plot}{MCMCresult}(x, drop.half = FALSE)
+\method{plot}{MCMCresult}(x, drop = 0)
 }
 \description{
 plot.MCMCresult

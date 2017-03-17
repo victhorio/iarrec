@@ -2,10 +2,12 @@
 % Please edit documentation in R/mcmc_igig.R
 \name{mcmc_igig}
 \alias{mcmc_igig}
-\title{MCMC_IGIG}
+\title{MCMC Routine for Inference with Inverse Gamma priors on \eqn{\sigma_x^2} and
+\eqn{\sigma_m^2}}
 \usage{
 mcmc_igig(numit, t1_start, t2_start, sigma1, sigma2, Y, a1, b1, a2, b2)
 }
 \description{
-MCMC_IGIG
+MCMC Routine for Inference with Inverse Gamma priors on \eqn{\sigma_x^2} and
+\eqn{\sigma_m^2}
 }

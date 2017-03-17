@@ -11,13 +11,20 @@ print.MCMCresult <- function(x)
 #' plot.MCMCresult
 #'
 #' @export
-plot.MCMCresult <- function(x, drop.half = FALSE)
+plot.MCMCresult <- function(x, drop = 0)
 {
-	if (drop.half)
-	{
+	if (!is.numeric(drop) || drop < 0)
+		stop("Expected drop argument to be within [0,1] or [1, +Inf]")
+
+	if (drop.half < 1) {
 		n <- length(x$theta_1)
-		x$theta_1 <- x$theta_1[ceiling(n/2):n]
-		x$theta_2 <- x$theta_2[ceiling(n/2):n]
+		cutoff <- floor(n * drop) + 1
+		x$theta_1 <- x$theta_1[cutoff:n]
+		x$theta_2 <- x$theta_2[cutoff:n]
+	} else {
+		n <- length(x$theta_1)
+		x$theta_1 <- x$theta_1[drop:n]
+		x$theta_2 <- x$theta_2[drop:n]
 	}
 
 	qt1 <- quantile(x$theta_1, c(0.25, 0.5, 0.75))
