@@ -1,8 +1,140 @@
 # @TODO: Add documentation
-#' print.MCMCresult
+#' print.MCMCresultSLR
 #'
 #' @export
-print.MCMCresult <- function(x)
+print.MCMCresultSLR <- function(x)
+	cat(sprintf('MCMC Result containing %d data points and acceptance ratio %f\n',
+				length(x[[1]]), x[[7]]))
+
+
+# @TODO: Add documentation
+#' mean.MCMCresultSLR
+#'
+#' @export
+mean.MCMCresultSLR <- function(x)
+{
+	nms <- names(x)[1:6]
+	r <- rep(0, 6)
+	for (i in 1:6) {
+		r[i] <- mean(x[[i]])
+	}
+	names(r) <- nms
+	r
+}
+
+
+#' dropBurnin
+#'
+#' @export
+dropBurnin <- function(x, ...) UseMethod("dropBurnin")
+
+
+# @TODO: Add documentation
+#' dropBurnin.MCMCresultSLR
+#'
+#' @export
+dropBurnin.MCMCresultSLR <- function(x, drop = 0.5)
+{
+	if (!is.numeric(drop) || drop < 0)
+		stop("Expected drop argument to be within [0,1] or [1, +Inf]")
+
+	if (drop < 1) {
+		n <- length(x$beta_0)
+		cutoff <- floor(n * drop) + 1
+		x$beta_0   <- x$beta_0[cutoff:n]
+		x$beta_1   <- x$beta_1[cutoff:n]
+		x$mu_x     <- x$mu_x[cutoff:n]
+		x$sigma2_x <- x$sigma2_x[cutoff:n]
+		x$sigma2_r <- x$sigma2_r[cutoff:n]
+		x$sigma2_m <- x$sigma2_m[cutoff:n]
+	} else {
+		n <- length(x$beta_1)
+		x$beta_0   <- x$beta_0[drop:n]
+		x$beta_1   <- x$beta_1[drop:n]
+		x$mu_x     <- x$mu_x[drop:n]
+		x$sigma2_x <- x$sigma2_x[drop:n]
+		x$sigma2_r <- x$sigma2_r[drop:n]
+		x$sigma2_m <- x$sigma2_m[drop:n]
+	}
+
+	x
+}
+
+
+#' Plots a MCMC Result from the IARREC package
+#'
+#' @param x An MCMCresult S3 object
+#' @param drop Indicates how much of the samples to ignore.
+#'     If it's a value between [0,1) then it ignores the first \eqn{drop * n} samples from
+#'     the result. If it's a value within [1, +Inf) then the first \eqn{drop} values are
+#'     ignored. Ignores nothing by default.
+#' @param pause Indicates if should pause in between plots. Defaults to TRUE.
+#' @param ... Optional base R graphical parameters
+#'
+#' @export
+plot.MCMCresultSLR <- function(x, drop = 0, pause = TRUE, ...)
+{
+	if (!is.numeric(drop) || drop < 0)
+		stop("Expected drop argument to be within [0,1] or [1, +Inf]")
+
+	if (drop != 0) {
+		x <- dropBurnin.MCMCresultSLR(x, drop)
+	}
+	n <- length(x$beta_0)
+
+	q_beta0 <- quantile(x$beta_0, c(0.25, 0.5, 0.75))
+	q_beta1 <- quantile(x$beta_1, c(0.25, 0.5, 0.75))
+	q_mux   <- quantile(x$mu_x, c(0.25, 0.5, 0.75))
+	q_s2x   <- quantile(x$sigma2_x, c(0.25, 0.5, 0.75))
+	q_s2r   <- quantile(x$sigma2_r, c(0.25, 0.5, 0.75))
+	q_s2m   <- quantile(x$sigma2_m, c(0.25, 0.5, 0.75))
+
+	old.pars <- par(no.readonly = TRUE)
+	par(...)
+
+	layout(rbind(c(1,2), c(3, 4)))
+	plot(x$beta_0, type = 'l', main = 'Chain for Beta 0', ylab = '')
+	abline(h = q_beta0, col = 'orange', lty = 2, lwd = 1.5)
+	plot(x$beta_1, type = 'l', main = 'Chain for Beta 1', ylab = '')
+	abline(h = q_beta1, col = 'orange', lty = 2, lwd = 1.5)
+	plot(density(x$beta_0), main = 'Density Estimate of Beta 0')
+	abline(v = q_beta0, col = 'orange', lty = 2, lwd = 1.5)
+	plot(density(x$beta_1), main = 'Density Estimate of Beta 1')
+	abline(v = q_beta1, col = 'orange', lty = 2, lwd = 1.5)
+
+	if (pause)
+		readline("Press <enter> to continue...")
+
+	plot(x$mu_x, type = 'l', main = 'Chain for Mu x', ylab = '')
+	abline(h = q_mux, col = 'orange', lty = 2, lwd = 1.5)
+	plot(x$sigma2_x, type = 'l', main = 'Chain for Sigma2 X', ylab = '')
+	abline(h = q_s2x, col = 'orange', lty = 2, lwd = 1.5)
+	plot(density(x$mu_x), main = 'Density Estimate of Mu x')
+	abline(v = q_mux, col = 'orange', lty = 2, lwd = 1.5)
+	plot(density(x$sigma2_x), main = 'Density Estimate of Sigma2 x')
+	abline(v = q_s2x, col = 'orange', lty = 2, lwd = 1.5)
+
+	if (pause)
+		readline("Press <enter> to continue...")
+
+	plot(x$sigma2_r, type = 'l', main = 'Chain for Sigma2 r', ylab = '')
+	abline(h = q_s2r, col = 'orange', lty = 2, lwd = 1.5)
+	plot(x$sigma2_m, type = 'l', main = 'Chain for Sigma2 m', ylab = '')
+	abline(h = q_s2m, col = 'orange', lty = 2, lwd = 1.5)
+	plot(density(x$sigma2_r), main = 'Density Estimate of Sigma2 r')
+	abline(v = q_s2r, col = 'orange', lty = 2, lwd = 1.5)
+	plot(density(x$sigma2_m), main = 'Density Estimate of Sigma2 m')
+	abline(v = q_s2m, col = 'orange', lty = 2, lwd = 1.5)
+
+	par(old.pars)
+}
+
+
+# @TODO: Add documentation
+#' print.MCMCresult2
+#'
+#' @export
+print.MCMCresult2 <- function(x)
 	cat(sprintf('MCMC Result containing %d data points and acceptance ratio %f\n',
 				length(x[[1]]), x[[3]]))
 
@@ -17,7 +149,7 @@ print.MCMCresult <- function(x)
 #' @param ... Optional base R graphical parameters
 #'
 #' @export
-plot.MCMCresult <- function(x, drop = 0, ...)
+plot.MCMCresult2 <- function(x, drop = 0, ...)
 {
 	if (!is.numeric(drop) || drop < 0)
 		stop("Expected drop argument to be within [0,1] or [1, +Inf]")

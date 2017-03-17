@@ -3,11 +3,11 @@
 ### This file and its contents are licensed under the terms of the MIT License
 ###
 ### This file implements R wrappers for the C functions relating to the file
-### `mcmc_igig.R`.
+### `mcmc_igig.c`.
 
 
 # @TODO: Add documentation
-# @TODO: Make integer coercion inside the C code
+# @TODO: Make integer coercion of `numit` inside the C code
 #' MCMC Routine for Inference with Inverse Gamma priors on \eqn{\sigma_x^2} and
 #' \eqn{\sigma_m^2}
 #'

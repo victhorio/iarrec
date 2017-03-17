@@ -3,7 +3,7 @@
  * Copyright (c) 2017 Victhor S. Sartório
  * This file and its contents are licensed under the terms of the MIT License
  *
- * Implements an MCMC metropolis-hastings routine for inference over the model
+ * Implements a MCMC metropolis-hastings routine for inference over the model
  * 		Y ~ N(0, t1 + t2)
  * using IG priors for t1 and t2.
  */
@@ -18,18 +18,18 @@
 // @TODO: Add support for user-defined mu instead of 0 (make sure to change logposterior)
 
 
-double logposterior(double t1, double t2,       // Points to be evaluated
-                    const double *restrict Y,   // Vector of observations
-                    R_xlen_t n,                 // Number of observations
-                    double a1, double b1,       // Prior of t1
-                    double a2, double b2)       // Prior of t2
+static double
+logposterior(double t1, double t2,       // Points to be evaluated
+             const double *restrict Y,   // Vector of observations
+             R_xlen_t n,                 // Number of observations
+             double a1, double b1,       // Prior of t1
+             double a2, double b2)       // Prior of t2
 {
 	// Calculate value of the prior log-densities
 	double prior_t1 = c_linvgamma_s(t1, a1, b1);
 	double prior_t2 = c_linvgamma_s(t2, a2, b2);
 
 	// Calculate the log-likelihood of Y given t1 and t2
-	// @WARNING: Inlined to avoid intermediate object creation
 	long double loglikelihood = 0.0;
 	const double s2 = t1+t2;
 	for (R_xlen_t i = 0; i < n; i++)
@@ -103,7 +103,7 @@ SEXP mcmc_igig(SEXP r_numit,                            // Number of iterations
 
 	// Add a class to it
 	SEXP class_name = PROTECT(allocVector(STRSXP, 1));
-	SET_STRING_ELT(class_name, 0, mkChar("MCMCresult"));
+	SET_STRING_ELT(class_name, 0, mkChar("MCMCresult2"));
 	setAttrib(ret, R_ClassSymbol, class_name);
 
 	// Add names to the list

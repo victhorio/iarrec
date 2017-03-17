@@ -4,8 +4,8 @@
  * This file and its contents are licensed under the terms of the MIT License
  */
 
-#ifndef R_IDENTIFIABILITY_GAUSS_HEADER
-#define R_IDENTIFIABILITY_GAUSS_HEADER
+#ifndef R_IDENTIFIABILITY_BIGAUSS_HEADER
+#define R_IDENTIFIABILITY_BIGAUSS_HEADER
 
 #include "common.h"
 
