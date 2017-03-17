@@ -18,11 +18,11 @@
 // @TODO: Add support for user-defined mu instead of 0 (make sure to change logposterior)
 
 
-double logposterior(double t1, double t2,		// Points to be evaluated
-                    const double *restrict Y,	// Vector of observations
-                    R_xlen_t n,					// Number of observations
-                    double a1, double b1,		// Prior of t1
-                    double a2, double b2)		// Prior of t2
+double logposterior(double t1, double t2,       // Points to be evaluated
+                    const double *restrict Y,   // Vector of observations
+                    R_xlen_t n,                 // Number of observations
+                    double a1, double b1,       // Prior of t1
+                    double a2, double b2)       // Prior of t2
 {
 	// Calculate value of the prior log-densities
 	double prior_t1 = c_linvgamma_s(t1, a1, b1);
@@ -40,12 +40,12 @@ double logposterior(double t1, double t2,		// Points to be evaluated
 }
 
 
-SEXP mcmc_igig(SEXP r_numit,							// Number of iterations
-               SEXP r_t1_start, SEXP r_t2_start,		// Starting points for t1 and t2
-               SEXP r_sigma1, SEXP r_sigma2,			// The parameters of the chain
-               SEXP r_obs,								// The observation vector
-               SEXP r_a1, SEXP r_b1,					// The prior for t1
-               SEXP r_a2, SEXP r_b2)					// The prior for t2
+SEXP mcmc_igig(SEXP r_numit,                            // Number of iterations
+               SEXP r_t1_start, SEXP r_t2_start,        // Starting points for t1 and t2
+               SEXP r_sigma1, SEXP r_sigma2,            // The parameters of the chain
+               SEXP r_obs,                              // The observation vector
+               SEXP r_a1, SEXP r_b1,                    // The prior for t1
+               SEXP r_a2, SEXP r_b2)                    // The prior for t2
 {
 	// Syntatic check: Check if types and length are correct
 	if (TYPEOF(r_numit) != INTSXP || XLENGTH(r_numit) != 1)
